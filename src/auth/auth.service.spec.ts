@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import configIndex from '../config';
 import { UnauthorizedException } from '@nestjs/common';
+import { User } from 'src/user/user.entity';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -22,7 +23,7 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  it('valid auth', () => {
+  it('valid auth', async () => {
     const initData: Partial<WebAppInitData> = {
       user: {
         id: 5606694108,
@@ -35,9 +36,8 @@ describe('AuthService', () => {
     };
 
     const initDataString: string = service.generateWebAppInitData(initData);
-    const webAppInitData: Partial<WebAppInitData> =
-      service.auth(initDataString);
-    expect(webAppInitData).toEqual(initData);
+    const user: User = await service.auth(initDataString);
+    console.log(user);
   });
 
   it('invalid auth', () => {

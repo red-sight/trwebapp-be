@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from './user.entity';
-import { CreateUserInterface } from './interfaces/CreateUser.interface';
+import { WebAppInitData } from 'src/auth/interfaces/WebAppInitData.interface';
 
 @Injectable()
 export class UserService {
@@ -12,7 +12,10 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(data: CreateUserInterface): Promise<User> {
-    return this.userRepository.save(data);
+  async create(webAppInitData: Partial<WebAppInitData>): Promise<User> {
+    return this.userRepository.save({
+      tgId: webAppInitData.user.id,
+      tgInitData: webAppInitData.user,
+    });
   }
 }

@@ -1,5 +1,7 @@
 import { join } from 'path';
 
+console.log(__dirname);
+
 export default () => ({
   port: 3000,
 
@@ -11,7 +13,7 @@ export default () => ({
     password: 'dev',
     database: 'tgwebapp',
     schema: 'dev',
-    entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+    entities: [join(__dirname, '../**', '*.entity.{ts,js}')],
     synchronize: true,
   },
 

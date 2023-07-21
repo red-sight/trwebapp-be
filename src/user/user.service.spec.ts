@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateUserInterface } from './interfaces/CreateUser.interface';
+import { WebAppInitData } from 'src/auth/interfaces/WebAppInitData.interface';
 
 describe('UserService', () => {
   let service: UserService;
@@ -32,7 +32,16 @@ describe('UserService', () => {
   });
 
   it('create a user', async () => {
-    const data: CreateUserInterface = { tg_id: '1111222222' };
+    const data: Partial<WebAppInitData> = {
+      auth_date: 1689778707278,
+      user: {
+        id: 5606694108,
+        username: 'Rosalia87',
+        last_name: 'Wisoky',
+        first_name: 'Wade',
+        language_code: 'EN',
+      },
+    };
     saveMock.mockReturnValue(Promise.resolve(data));
     const user = await service.create(data);
     expect(user).toEqual(data);

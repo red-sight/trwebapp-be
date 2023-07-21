@@ -2,15 +2,23 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import * as crypto from 'node:crypto';
+import { UserService } from 'src/user/user.service';
+import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly userService: UserService,
+  ) {}
 
-  auth(webAppInitDataString: string): Partial<WebAppInitData> {
-    const webAppInitData = this.validateWebAppInitData(webAppInitDataString);
+  auth(webAppInitDataString: string): Promise<User> {
+    const webAppInitData: Partial<WebAppInitData> =
+      this.validateWebAppInitData(webAppInitDataString);
     if (!webAppInitData) throw new UnauthorizedException();
-    return webAppInitData;
+
+    const user = this.userService.create(webAppInitData);
+    return user;
   }
 
   generateWebAppInitData(initData: Partial<WebAppInitData>): string {
@@ -34,9 +42,7 @@ export class AuthService {
     return searchParams.toString();
   }
 
-  private validateWebAppInitData(
-    initDataString: string,
-  ): Partial<WebAppInitData> {
+  validateWebAppInitData(initDataString: string): Partial<WebAppInitData> {
     const searchParams = new URLSearchParams(initDataString);
     const hash = searchParams.get('hash');
     const dataCheckArr: string[] = [];
