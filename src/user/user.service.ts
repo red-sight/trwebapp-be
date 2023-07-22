@@ -13,9 +13,16 @@ export class UserService {
   ) {}
 
   async create(webAppInitData: Partial<WebAppInitData>): Promise<User> {
-    return this.userRepository.save({
+    let user = await this.userRepository.findOneBy({
       tgId: webAppInitData.user.id,
-      tgInitData: webAppInitData.user,
     });
+
+    if (!user)
+      user = await this.userRepository.save({
+        tgId: webAppInitData.user.id,
+        tgInitData: webAppInitData.user,
+      });
+
+    return user;
   }
 }
