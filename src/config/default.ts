@@ -1,7 +1,5 @@
 import { join } from 'path';
 
-console.log(__dirname);
-
 export default () => ({
   port: 3000,
 

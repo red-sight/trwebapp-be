@@ -2,8 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import * as crypto from 'node:crypto';
-import { UserService } from 'src/user/user.service';
-import { User } from 'src/user/user.entity';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {

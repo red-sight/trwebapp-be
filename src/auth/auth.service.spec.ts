@@ -5,15 +5,26 @@ import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import configIndex from '../config';
 import { UnauthorizedException } from '@nestjs/common';
 import { User } from 'src/user/user.entity';
+import { UserService } from '../user/user.service';
+import { v4 as uuid } from 'uuid';
 
 describe('AuthService', () => {
   let service: AuthService;
   // let config;
   const auth_date = new Date().getTime();
+  let mockUserService;
 
   beforeEach(async () => {
+    mockUserService = {
+      create: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, ConfigService],
+      providers: [
+        ConfigService,
+        AuthService,
+        { provide: UserService, useValue: mockUserService },
+      ],
       imports: [ConfigModule.forRoot({ isGlobal: true, load: [configIndex] })],
     }).compile();
     service = module.get<AuthService>(AuthService);
@@ -35,9 +46,19 @@ describe('AuthService', () => {
       auth_date,
     };
 
+    const createResult = {
+      id: uuid(),
+      tgId: initData.user.id,
+      tgInintData: initData,
+    };
+
+    jest
+      .spyOn(mockUserService, 'create')
+      .mockImplementation(() => Promise.resolve(createResult));
+
     const initDataString: string = service.generateWebAppInitData(initData);
     const user: User = await service.auth(initDataString);
-    console.log(user);
+    expect(user).toEqual(createResult);
   });
 
   it('invalid auth', () => {
