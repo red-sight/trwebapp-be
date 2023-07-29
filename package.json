@@ -17,7 +17,7 @@
     "test:watch": "export NODE_ENV=test; jest --watch",
     "test:cov": "export NODE_ENV=test; jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "export NODE_ENV=test && jest --config ./test/jest-e2e.json --detectOpenHandles"
+    "test:e2e": "export NODE_ENV=test && jest --config ./test/jest-e2e.json --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -31,6 +31,7 @@
     "connect-redis": "^7.1.0",
     "express-session": "^1.17.3",
     "lodash": "^4.17.21",
+    "nestjs-i18n": "^10.2.6",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.1",

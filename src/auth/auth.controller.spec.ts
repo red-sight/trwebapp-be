@@ -6,7 +6,6 @@ import configIndex from '../config';
 import { v4 as uuid } from 'uuid';
 import { UserService } from '../user/user.service';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
-import { create } from 'domain';
 
 describe('AuthController', () => {
   let controller: AuthController;
