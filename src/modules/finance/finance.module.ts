@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AccountController } from '@modules/account/account.controller';
 import { AccountService } from '@modules/account/account.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '@modules/account/account.entity';
-import { TransactionService } from '../transaction/transaction.service';
-import { Transaction } from '../transaction/transaction.entity';
+import { TransactionService } from '@modules/transaction/transaction.service';
+import { Transaction } from '@modules/transaction/transaction.entity';
+import { AccountModule } from '@modules/account/account.module';
+import { TransferModule } from '@modules/transfer/transfer.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Account, Transaction])],
-  controllers: [AccountController],
+  imports: [
+    TypeOrmModule.forFeature([Account, Transaction]),
+    AccountModule,
+    TransferModule,
+  ],
   providers: [AccountService, TransactionService],
   exports: [TransactionService],
 })

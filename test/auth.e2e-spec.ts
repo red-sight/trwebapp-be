@@ -71,6 +71,7 @@ describe('Authentication system', () => {
       .expect(201)
       .then((res) => {
         console.dir(res.body, { depth: null });
+        expect(res.body).toBeTruthy();
         /*  expect(res.body).toEqual(
           expect.objectContaining({
             id: expect.any(String),

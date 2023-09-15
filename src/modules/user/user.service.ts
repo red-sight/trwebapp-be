@@ -6,6 +6,11 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { WebAppInitData } from '@modules/auth/interfaces/WebAppInitData.interface';
 import { Account } from '@modules/account/account.entity';
+import { AccountService } from '@modules/account/account.service';
+import {
+  EAccountType,
+  ECurrencyType,
+} from '@modules/account/types/account.types';
 
 @Injectable()
 export class UserService {
@@ -16,6 +21,8 @@ export class UserService {
     private readonly accountRepository: Repository<Account>,
 
     private readonly transactionService: TransactionService,
+
+    private readonly accountService: AccountService,
   ) {}
 
   async create(webAppInitData: Partial<WebAppInitData>): Promise<User> {
@@ -27,14 +34,16 @@ export class UserService {
       user = this.userRepository.create({
         tgId: webAppInitData.user.id,
         tgInitData: webAppInitData.user,
-        /* accounts: [
-          this.accountRepository.create({
-            type: accountType.BONUS,
+        accounts: [
+          this.accountService.createAccount({
+            type: EAccountType.USER,
+            currency: ECurrencyType.REAL,
           }),
-          this.accountRepository.create({
-            type: accountType.REAL,
+          this.accountService.createAccount({
+            type: EAccountType.USER,
+            currency: ECurrencyType.BONUS,
           }),
-        ], */
+        ],
       });
       await this.userRepository.save(user);
 

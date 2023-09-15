@@ -8,6 +8,9 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { FinanceModule } from './modules/finance/finance.module';
+import { AccountModule } from './modules/account/account.module';
+import { TransferModule } from './modules/transfer/transfer.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 import * as path from 'path';
 
 @Module({
@@ -41,6 +44,9 @@ import * as path from 'path';
     UserModule,
     AuthModule,
     FinanceModule,
+    AccountModule,
+    TransferModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

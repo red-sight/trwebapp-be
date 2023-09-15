@@ -1,3 +1,4 @@
+import { TransferService } from './../transfer/transfer.service';
 import { AccountService } from '@modules/account/account.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,8 +8,10 @@ import {
   // accountTypeSystem,
 } from '@modules/account/account.entity';
 import { Repository } from 'typeorm';
-import { Transaction } from '../transaction/transaction.entity';
-import { Transfer } from '../transfer/transfer.entity';
+import { Transaction } from '@modules/transaction/transaction.entity';
+import { Transfer } from '@modules/transfer/transfer.entity';
+import { IDeposit } from './interfaces/deposit.interface';
+import { ESystemAccountType } from '@modules/account/types/account.types';
 
 @Injectable()
 export class FinancialService {
@@ -23,29 +26,28 @@ export class FinancialService {
     private readonly transferRepository: Repository<Transfer>,
 
     private readonly accountService: AccountService,
+    private readonly transferService: TransferService,
   ) {}
 
-  /* private async transfer(
-    from: string,
-    to: string,
-    amount: number,
-    desc: string,
-  ) {
-    const accountFrom: Account = await this.accountService.findAccount(from);
-    if (!accountFrom) throw new NotFoundException(`Account ${from} not found`);
-    if (!accountFrom.typeSystem && accountFrom.balance < amount)
-      throw new ForbiddenException(`Not enough funds on account ${to}`);
+  public async deposit(data: IDeposit) {
+    const { user, amount, currency, desc = 'deposit' } = data;
 
-    const accountTo: Account = await this.accountService.findAccount(to);
-    if (!accountTo) throw new NotFoundException(`Account ${to} not found`);
+    const userAccount = user.accounts.find((a) => a.currency === currency);
 
-    const transfer = await this.transferRepository.create({
+    const systemDepositAccount = await this.accountService.getSystemAccount(
+      currency,
+      ESystemAccountType.DEPOSITS,
+    );
+
+    const depositTransfer = await this.transferService.createTransfer({
+      from: userAccount,
+      to: systemDepositAccount,
       amount,
-      transactions: [{
-        amount: 
-      }],
+      desc,
     });
-  } */
+
+    return depositTransfer;
+  }
 
   /* async deposit(account: Account, amount: number): Promise<Transaction> {
     const systemAccount: Account = await this.accountService.getSystemAccount(

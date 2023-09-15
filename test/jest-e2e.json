@@ -8,6 +8,6 @@
   },
   "moduleDirectories": ["<rootDir>/../", "node_modules"],
   "moduleNameMapper": {
-    "@modules/(.*)/(.*)": "<rootDir>/src/$1/$2"
+    "@modules/(.*)": ["<rootDir>/../src/modules/$1"]
   }
 }

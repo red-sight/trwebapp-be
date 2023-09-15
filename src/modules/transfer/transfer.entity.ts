@@ -6,7 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn,
 } from 'typeorm';
 
 @Entity()
@@ -17,8 +16,9 @@ export class Transfer {
   @Column({ nullable: false, length: 512 })
   desc: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.transfer)
-  @JoinColumn({ name: 'transfer_id', referencedColumnName: 'id' })
+  @OneToMany(() => Transaction, (transaction) => transaction.transfer, {
+    cascade: true,
+  })
   transactions: Transaction[];
 
   @CreateDateColumn({ name: 'ctime' })

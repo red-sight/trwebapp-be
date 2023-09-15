@@ -4,8 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import configIndex from '../../config';
 import { UnauthorizedException } from '@nestjs/common';
-import { User } from 'src/user/user.entity';
-import { UserService } from '../../user/user.service';
+import { User } from '@modules/user/user.entity';
+import { UserService } from '@modules/user/user.service';
 import { v4 as uuid } from 'uuid';
 
 describe('AuthService', () => {
