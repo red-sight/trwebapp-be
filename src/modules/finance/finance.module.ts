@@ -6,6 +6,7 @@ import { TransactionService } from '@modules/transaction/transaction.service';
 import { Transaction } from '@modules/transaction/transaction.entity';
 import { AccountModule } from '@modules/account/account.module';
 import { TransferModule } from '@modules/transfer/transfer.module';
+import { FinanceService } from './finance.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { TransferModule } from '@modules/transfer/transfer.module';
     AccountModule,
     TransferModule,
   ],
-  providers: [AccountService, TransactionService],
-  exports: [TransactionService],
+  providers: [FinanceService],
+  exports: [FinanceService],
 })
 export class FinanceModule {}

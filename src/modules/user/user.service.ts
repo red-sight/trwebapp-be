@@ -11,6 +11,7 @@ import {
   EAccountType,
   ECurrencyType,
 } from '@modules/account/types/account.types';
+import { FinanceService } from '@modules/finance/finance.service';
 
 @Injectable()
 export class UserService {
@@ -19,10 +20,9 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
-
     private readonly transactionService: TransactionService,
-
     private readonly accountService: AccountService,
+    private readonly financeService: FinanceService,
   ) {}
 
   async create(webAppInitData: Partial<WebAppInitData>): Promise<User> {
@@ -46,13 +46,19 @@ export class UserService {
         ],
       });
       await this.userRepository.save(user);
-
-      /* await this.transactionService.deposit(
-        user.accounts.find((a) => a.type === accountType.BONUS),
-        30,
-      ); */
+      await this.financeService.deposit({
+        user,
+        amount: 30,
+        currency: ECurrencyType.BONUS,
+        desc: 'Welcome bonus',
+      });
     }
 
-    return user;
+    return this.userRepository.findOne({
+      where: { id: user.id },
+      relations: {
+        accounts: true,
+      },
+    });
   }
 }

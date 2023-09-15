@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { Account } from '@modules/account/account.entity';
 import { FinanceModule } from '@modules/finance/finance.module';
 import { AccountModule } from '@modules/account/account.module';
+import { TransactionModule } from '@modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AccountModule } from '@modules/account/account.module';
     TypeOrmModule.forFeature([Account]),
     FinanceModule,
     AccountModule,
+    TransactionModule,
   ],
   providers: [UserService],
   exports: [UserService],
