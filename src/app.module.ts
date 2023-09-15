@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { FinanceModule } from './modules/finance/finance.module';
 import * as path from 'path';
 
 @Module({
@@ -25,10 +26,10 @@ import * as path from 'path';
         { use: QueryResolver, options: ['lang'] },
         AcceptLanguageResolver,
       ],
-      typesOutputPath: path.join(
+      /* typesOutputPath: path.join(
         __dirname,
         '../src/generated/i18n.generated.ts',
-      ),
+      ), */
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -39,6 +40,7 @@ import * as path from 'path';
     }),
     UserModule,
     AuthModule,
+    FinanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

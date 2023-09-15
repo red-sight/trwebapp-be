@@ -7,6 +7,7 @@ export default () => ({
     password: 'dev',
     database: 'tgwebapp',
     schema: 'test',
+    dropSchema: true,
     entities: ['**/*.entity{.ts,.js}'],
   },
 });

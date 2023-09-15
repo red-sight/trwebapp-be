@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import configIndex from '../config';
+import configIndex from '../../config';
 import { v4 as uuid } from 'uuid';
-import { UserService } from '../user/user.service';
+import { UserService } from '@modules/user/user.service';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 
 describe('AuthController', () => {

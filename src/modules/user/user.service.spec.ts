@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { WebAppInitData } from 'src/auth/interfaces/WebAppInitData.interface';
+import { WebAppInitData } from 'src/modules/auth/interfaces/WebAppInitData.interface';
 
 describe('UserService', () => {
   let service: UserService;

@@ -10,7 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { WebAppInitData } from './interfaces/WebAppInitData.interface';
 import { AuthDto } from './dtos/auth.dto';
-import { AuthGuard } from '../guards/auth.guard';
+import { AuthGuard } from '../../guards/auth.guard';
 import { I18n, I18nContext, I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 @Controller('auth')

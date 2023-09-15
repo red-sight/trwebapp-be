@@ -31,6 +31,7 @@
     "connect-redis": "^7.1.0",
     "express-session": "^1.17.3",
     "lodash": "^4.17.21",
+    "module-alias": "^2.2.3",
     "nestjs-i18n": "^10.2.6",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
@@ -81,6 +82,14 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@modules/(.*)": [
+        "<rootDir>/modules/$1"
+      ]
+    }
+  },
+  "_moduleAliases": {
+    "@modules": "dist/src/modules"
   }
 }
