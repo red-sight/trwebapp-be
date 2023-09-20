@@ -12,6 +12,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import * as path from 'path';
+// import { DatabaseUtil } from './utils/DatabaseUtil';
 
 describe('Authentication system', () => {
   let app: INestApplication;
@@ -58,7 +59,10 @@ describe('Authentication system', () => {
 
     app.useGlobalPipes(new I18nValidationPipe());
 
-    return await app.init();
+    await app.init();
+
+    // const databaseUtil = new DatabaseUtil(app);
+    // await databaseUtil.clearAll();
   });
 
   it('/auth (POST)', () => {
@@ -70,7 +74,7 @@ describe('Authentication system', () => {
       .send({ initData: webAppInitDataString })
       .expect(201)
       .then((res) => {
-        console.dir(res.body, { depth: null });
+        // console.dir(res.body, { depth: null });
         expect(res.body).toBeTruthy();
         /*  expect(res.body).toEqual(
           expect.objectContaining({

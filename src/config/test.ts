@@ -1,3 +1,5 @@
+import { join } from 'path';
+
 export default () => ({
   db: {
     type: 'postgres',
@@ -7,7 +9,7 @@ export default () => ({
     password: 'dev',
     database: 'tgwebapp',
     schema: 'test',
-    dropSchema: true,
-    entities: ['**/*.entity{.ts,.js}'],
+    entities: [join(__dirname, '../**', '*.entity.{ts,js}')],
+    synchronize: true,
   },
 });

@@ -5,6 +5,9 @@ export type I18nTranslations = {
     "common": {
         "message": string;
     };
+    "errors": {
+        "ACCOUNT_TYPES_MISMATCH": string;
+    };
     "validations": {
         "NOT_EMPTY": string;
     };
