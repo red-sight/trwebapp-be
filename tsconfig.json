@@ -20,7 +20,8 @@
     "moduleResolution": "node",
     "baseUrl": "src",
     "paths": {
-      "@modules/*": ["modules/*"]
+      "@modules/*": ["modules/*"],
+      "@config": ["config/index.ts"]
     }
   }
 }

@@ -11,7 +11,7 @@ import {
 @Entity()
 export class Transfer {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ nullable: false, length: 512 })
   desc: string;

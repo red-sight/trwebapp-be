@@ -18,7 +18,7 @@ export class AccountService {
     private readonly i18n: I18nService,
   ) {}
 
-  public findAccount(id: string): Promise<Account> {
+  public findAccount(id: string): Promise<Account | null> {
     return this.accountRepository.findOneBy({ id });
   }
 
@@ -34,7 +34,7 @@ export class AccountService {
   public async getSystemAccount(
     currency: ECurrencyType,
     systemType: ESystemAccountType,
-  ) {
+  ): Promise<Account> {
     let account = await this.accountRepository.findOneBy({
       type: EAccountType.SYSTEM,
       systemType,
