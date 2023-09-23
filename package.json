@@ -86,6 +86,9 @@
       "@modules/(.*)": [
         "<rootDir>/modules/$1"
       ],
+      "@guards/(.*)": [
+        "<rootDir>/guards/$1"
+      ],
       "@config": [
         "<rootDir>/config"
       ]

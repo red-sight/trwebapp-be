@@ -8,6 +8,7 @@
   },
   "moduleDirectories": ["<rootDir>/../", "node_modules"],
   "moduleNameMapper": {
-    "@modules/(.*)": ["<rootDir>/../src/modules/$1"]
+    "@modules/(.*)": ["<rootDir>/../src/modules/$1"],
+    "@guards/(.*)": ["<rootDir>/../src/guards/$1"]
   }
 }

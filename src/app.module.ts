@@ -11,6 +11,8 @@ import { FinanceModule } from './modules/finance/finance.module';
 import { AccountModule } from './modules/account/account.module';
 import { TransferModule } from './modules/transfer/transfer.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
+import { ProductModule } from '@modules/product/product.module';
+import { PurchaseModule } from './modules/purchase/purchase.module';
 import * as path from 'path';
 
 @Module({
@@ -47,6 +49,8 @@ import * as path from 'path';
     AccountModule,
     TransferModule,
     TransactionModule,
+    ProductModule,
+    PurchaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -13,8 +13,10 @@ export class DatabaseUtil {
     const tableNames = entityManager.connection.entityMetadatas
       .map((entity) => entity.tableName)
       .join('", "');
-
-    const query = `truncate table "${tableNames}" cascade;`;
+    const schema = entityManager.connection.driver.schema;
+    const query = `
+      set search_path to ${schema};
+      truncate table "${tableNames}" restart identity cascade;`;
     await entityManager.query(query);
   }
 }

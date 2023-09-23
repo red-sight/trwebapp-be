@@ -1,68 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import RedisStore from 'connect-redis';
-import { createClient } from 'redis';
-import * as session from 'express-session';
-import {
-  AcceptLanguageResolver,
-  I18nModule,
-  I18nValidationPipe,
-  QueryResolver,
-} from 'nestjs-i18n';
-import * as path from 'path';
-// import { DatabaseUtil } from './utils/DatabaseUtil';
+import { TestingAppModule } from './utils/TestingAppModule';
 
 describe('Authentication system', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        AppModule,
-        I18nModule.forRoot({
-          fallbackLanguage: 'en',
-          loaderOptions: {
-            path: path.join(__dirname, '../src/i18n/'),
-            watch: true,
-          },
-          resolvers: [
-            { use: QueryResolver, options: ['lang'] },
-            AcceptLanguageResolver,
-          ],
-          typesOutputPath: path.join(
-            __dirname,
-            '../src/generated/i18n.generated.ts',
-          ),
-        }),
-      ],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-
-    const redisClient = createClient();
-    await redisClient.connect();
-    const redisStore = new RedisStore({
-      client: redisClient,
-      prefix: 'tgwebapp:',
-    });
-
-    app.use(
-      session({
-        store: redisStore,
-        secret: 'my-secret',
-        resave: false,
-        saveUninitialized: false,
-      }),
-    );
-
-    app.useGlobalPipes(new I18nValidationPipe());
-
-    await app.init();
-
-    // const databaseUtil = new DatabaseUtil(app);
-    // await databaseUtil.clearAll();
+    app = await TestingAppModule.init();
   });
 
   it('/auth (POST)', () => {
