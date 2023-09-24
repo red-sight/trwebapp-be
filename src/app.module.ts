@@ -13,6 +13,7 @@ import { TransferModule } from './modules/transfer/transfer.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { ProductModule } from '@modules/product/product.module';
 import { PurchaseModule } from './modules/purchase/purchase.module';
+import { AdminModule } from '@modules/admin/admin.module';
 import * as path from 'path';
 
 @Module({
@@ -51,6 +52,7 @@ import * as path from 'path';
     TransactionModule,
     ProductModule,
     PurchaseModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

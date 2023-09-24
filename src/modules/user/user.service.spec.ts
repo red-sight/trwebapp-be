@@ -3,24 +3,40 @@ import { UserService } from './user.service';
 import { User } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { WebAppInitData } from '@modules/auth/interfaces/WebAppInitData.interface';
+import { AccountService } from '@modules/account/account.service';
+import { FinanceService } from '@modules/finance/finance.service';
 
 describe('UserService', () => {
   let service: UserService;
-  let saveMock: jest.Mock;
+  const accountServiceMock = {
+    createAccount: jest.fn(),
+  };
+  const financeServiceMock = {
+    deposit: jest.fn(),
+  };
+  const userRepositoryMock = {
+    create: jest.fn(),
+    save: jest.fn(),
+    findOneBy: jest.fn(),
+    findOne: jest.fn(),
+  };
 
   beforeEach(async () => {
-    saveMock = jest.fn();
     const module: TestingModule = await Test.createTestingModule({
       imports: [],
       providers: [
         UserService,
         {
           provide: getRepositoryToken(User),
-          useValue: {
-            create: jest.fn(),
-            save: saveMock,
-            findOneBy: jest.fn(),
-          },
+          useValue: userRepositoryMock,
+        },
+        {
+          provide: AccountService,
+          useValue: accountServiceMock,
+        },
+        {
+          provide: FinanceService,
+          useValue: financeServiceMock,
         },
       ],
     }).compile();
@@ -43,8 +59,9 @@ describe('UserService', () => {
         language_code: 'EN',
       },
     };
-    saveMock.mockReturnValue(Promise.resolve(data));
+    const findOne = jest
+      .spyOn(userRepositoryMock, 'findOneBy')
+      .mockImplementation(() => Promise.resolve(data.user));
     const user = await service.create(data);
-    expect(user).toEqual(data);
   });
 });

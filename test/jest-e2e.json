@@ -9,6 +9,7 @@
   "moduleDirectories": ["<rootDir>/../", "node_modules"],
   "moduleNameMapper": {
     "@modules/(.*)": ["<rootDir>/../src/modules/$1"],
-    "@guards/(.*)": ["<rootDir>/../src/guards/$1"]
+    "@guards/(.*)": ["<rootDir>/../src/guards/$1"],
+    "@decorators/(.*)": ["<rootDir>/../src/decorators/$1"]
   }
 }

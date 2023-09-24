@@ -18,9 +18,6 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(Account)
-    private readonly accountRepository: Repository<Account>,
-    private readonly transactionService: TransactionService,
     private readonly accountService: AccountService,
     private readonly financeService: FinanceService,
   ) {}
